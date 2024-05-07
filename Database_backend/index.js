@@ -2,6 +2,8 @@ import express from "express"
 import mysql from "mysql"
 import cors from "cors"
 import routes from './routes.js'; 
+import add from "./add.js";
+import del from "./delete.js";
 
 const app = express()
 
@@ -12,7 +14,8 @@ app.use(cors())
 
 
 
-app.use('/', routes)
+app.use('/', routes, add, del)
+
 
 
 

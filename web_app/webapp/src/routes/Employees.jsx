@@ -2,10 +2,11 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
-import Add from './Add'
+import Add from '../components/Add'
 
 function employees() {
   const [employees,setEmployees] = useState([])
+
 
   useEffect(()=>{
     const fetchAllEmployees = async ()=>{
@@ -20,10 +21,36 @@ function employees() {
    fetchAllEmployees() 
   },[])
 
+
+
+
+  const  handleDelete = async (id)=>{
+
+    try {
+      const pkName = "emplid"
+      const confirmed = window.confirm("Are you sure you want to delete this employee?");
+    
+      if (confirmed) {
+          // If user confirms, proceed with deletion
+          const res = await axios.delete(`http://localhost:8100/employees/${id}/${pkName}`);
+          alert(res.statusText)
+
+          window.location.reload()
+      } else {
+          // If user cancels, do nothing or provide feedback
+          console.log("Deletion cancelled by user.");
+      }
+    
+    } catch (error) {
+      alert(error)
+    }
+  }
+
   return (
     <>
       <Navbar/>
      <h1>Employees Table</h1>
+     <Add/>
      <table className='employees-table'>
         <thead>
           <tr>
@@ -51,6 +78,8 @@ function employees() {
               <td>{employee.office_location}</td>
               <td>{employee.date_of_hire}</td>
               <td>{employee.role}</td>
+              <td> <button >Edit</button></td>
+              <td> <button onClick={()=>handleDelete(employee.emplid)}>Delete</button></td>
               {/* Add more table data cells as needed */}
             </tr>
           ))}
