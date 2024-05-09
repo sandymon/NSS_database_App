@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
 
+import AddData from '../components/AddData'
+
 function CheatingIncidents() {
   const [cheatingIncidents,setCheatingIncidents] = useState([])
 
@@ -24,6 +26,8 @@ function CheatingIncidents() {
     <Navbar/>
 
     <h1>Cheating Incidents Table</h1>
+    <button><AddData fields={['incident_id','emplid','sectionID','date', 'description', 'resolution']} endpoint="cheating_incidents"/></button>
+
     <table className='cheating-incidents-table'>
       <thead>
         <tr>

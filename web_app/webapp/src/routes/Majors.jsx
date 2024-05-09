@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
 
+import AddData from '../components/AddData'
 function Majors() {
   const [majors,setMajors] = useState([])
 
@@ -24,6 +25,8 @@ function Majors() {
       <Navbar/>
 
      <h1>Majors Table</h1>
+     <button><AddData fields={['major_id','name', 'description', 'type_of_degree', 'total_credits_required', 'faculty_advisor_emplid']} endpoint="majors"/></button>
+
       <table className='majors-table'>
         <thead>
           <tr>

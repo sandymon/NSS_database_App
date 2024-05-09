@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
-
+import AddData from '../components/AddData'
 import Navbar from './Navbar'
 
 function courses() {
@@ -21,11 +21,35 @@ function courses() {
    
   },[])
 
+  const  handleDelete = async (id)=>{
+
+    try {
+      const pkName = "CourseID"
+      const confirmed = window.confirm("Are you sure you want to delete this employee?");
+    
+      if (confirmed) {
+          // If user confirms, proceed with deletion
+          const res = await axios.delete(`http://localhost:8100/courses/${id}/${pkName}`);
+          alert(res.data.sqlMessage)
+
+          window.location.reload()
+      } else {
+          // If user cancels, do nothing or provide feedback
+          console.log("Deletion cancelled by user.");
+      }
+    
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+
   return (
     <>
     <Navbar/>
 
     <h1>Courses Table</h1>
+    <button><AddData fields={['CourseID','Course_Name', 'Course_Code', 'hours', 'credits', 'description', 'department_id']} endpoint="courses"/></button>
 
     <table className='courses-table'>
       <thead>
@@ -50,6 +74,9 @@ function courses() {
             <td>{course.credits}</td>
             <td>{course.description}</td>
             <td>{course.department_id}</td>
+            <td> <button >Edit</button></td>
+              <td> <button onClick={()=>handleDelete(course.CourseID)}>Delete</button></td>
+            
           </tr>
         ))
         }{console.log(courses)}

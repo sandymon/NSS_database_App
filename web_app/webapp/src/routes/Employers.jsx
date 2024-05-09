@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
+import AddData from '../components/AddData'
 
 function employers() {
   const [employers,setEmployers] = useState([])
@@ -24,6 +25,8 @@ function employers() {
     <Navbar/>
 
     <h1>Employers Table</h1>
+    <button><AddData fields={['Employer_id','EmployerName', 'Industry', 'address']} endpoint="employers"/></button>
+
     <table className='employers-table'>
       <thead>
         <tr>

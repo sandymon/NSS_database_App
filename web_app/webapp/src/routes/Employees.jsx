@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
 import Add from '../components/Add'
+import { Link } from 'react-router-dom'
+import AddData from '../components/AddData'
 
 function employees() {
   const [employees,setEmployees] = useState([])
@@ -50,7 +52,7 @@ function employees() {
     <>
       <Navbar/>
      <h1>Employees Table</h1>
-     <Add/>
+      <button><AddData  fields={['emplid', 'name', 'ssn', 'phone', 'email', 'address', 'office_location', 'date_of_hire', 'role']} endpoint="employees"/></button>    
      <table className='employees-table'>
         <thead>
           <tr>

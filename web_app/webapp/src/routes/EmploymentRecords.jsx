@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
 
+import AddData from '../components/AddData'
+
 function EmployementRecords() {
   const [employmentRecords,setEmploymentRecords] = useState([])
 
@@ -19,14 +21,34 @@ function EmployementRecords() {
    fetchAllEmploymentRecords() 
   },[])
 
-  const handleAddEmployee = ()=>{}
+  const  handleDelete = async (id)=>{
 
+    try {
+      const pkName = "record_id"
+      const confirmed = window.confirm("Are you sure you want to delete this employee?");
+    
+      if (confirmed) {
+          // If user confirms, proceed with deletion
+          const res = await axios.delete(`http://localhost:8100/employment_records/${id}/${pkName}`);
+          alert(res.statusText)
+
+          window.location.reload()
+      } else {
+          // If user cancels, do nothing or provide feedback
+          console.log("Deletion cancelled by user.");
+      }
+    
+    } catch (error) {
+      alert(error)
+    }
+  }
   return (
     <>
     <Navbar/>
 
     <h1>Employment Records Table</h1>
-    
+    <button><AddData fields={['record_id','emplid','employer_id','start_date', 'end_date', 'job_title_or_position']} endpoint="employment_records"/></button>
+
     <table className='employment-records-table'>
       <thead>
         <tr>
@@ -47,6 +69,8 @@ function EmployementRecords() {
             <td>{record.start_date}</td>
             <td>{record.end_date}</td>
             <td>{record.job_title_or_position}</td>
+            <td> <button >Edit</button></td>
+            <td> <button onClick={()=>handleDelete(record.emplid)}>Delete</button></td>
           </tr>
         ))}
       </tbody>

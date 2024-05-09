@@ -43,69 +43,44 @@ add.post("/courses", (req, res) => {
     insertDataIntoTable('Courses', req, res);
 });
 
-add.get("/employees", (req, res) => {
-    getDataFromTable('Employees', res);
+// Route handler for adding data to Course_Sections table
+add.post("/course_sections", (req, res) => {
+    insertDataIntoTable('Course_Sections', req, res);
 });
 
-add.get("/faculty", (req, res) => {
-    getDataFromTable('Faculty', res);
+// Route handler for adding data to Departments table
+add.post("/departments", (req, res) => {
+    insertDataIntoTable('Departments', req, res);
 });
 
-add.get("/staff", (req, res) => {
-    getDataFromTable('Staff', res);
+// Route handler for adding data to Majors table
+add.post("/majors", (req, res) => {
+    insertDataIntoTable('Majors', req, res);
 });
 
-add.get("/courses", (req, res) => {
-    getDataFromTable('Courses', res);
+// Route handler for adding data to Students table
+add.post("/students", (req, res) => {
+    insertDataIntoTable('Students', req, res);
 });
 
-
-// Get request for Courses
-add.get("/course_sections", (req, res) => {
-    getDataFromTable('course_sections', res);
+// Route handler for adding data to Graduates table
+add.post("/graduates", (req, res) => {
+    insertDataIntoTable('Graduates', req, res);
 });
 
-
-// Get request for Departments
-add.get("/departments", (req, res) => {
-    getDataFromTable('departments', res);
+// Route handler for adding data to Employers table
+add.post("/employers", (req, res) => {
+    insertDataIntoTable('Employers', req, res);
 });
 
-// Get request for Majors
-add.get("/majors", (req, res) => {
-    getDataFromTable('Majors', res);
+// Route handler for adding data to Employment_Records table
+add.post("/employment_records", (req, res) => {
+    insertDataIntoTable('Employment_Records', req, res);
 });
 
-
-
-// Get request for Students
-add.get("/students", (req, res) => {
-    getDataFromTable('students', res);
-
-});
-
-// Get request for Graduates
-add.get("/graduates", (req, res) => {
-    getDataFromTable('graduates', res);
-
-});
-
-// Get request for Employers
-add.get("/employers", (req, res) => {
-    getDataFromTable('employers', res);
-
-});
-
-// Get request for Employment_Records
-add.get("/employment_records", (req, res) => {
-    getDataFromTable('employment_records', res);
-
-});
-
-// Get request for Cheating_Incidents
-add.get("/cheating_incidents", (req, res) => {
-    getDataFromTable('cheating_incidents', res);
-
+// Route handler for adding data to Cheating_Incidents table
+add.post("/cheating_incidents", (req, res) => {
+    insertDataIntoTable('Cheating_Incidents', req, res);
 });
 
 export default add

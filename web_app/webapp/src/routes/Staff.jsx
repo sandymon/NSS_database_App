@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
+import AddData from '../components/AddData'
+
 
 function Staff() {
   const [staff,setStaff] = useState([])
@@ -24,11 +26,12 @@ function Staff() {
     <Navbar/>
 
     <h1>Staff Table</h1>
+    <button><AddData fields={['emplid', 'position']} endpoint="staff"/></button>
+
     <table className='staff-table'>
       <thead>
         <tr>
           <th>Emplid</th>
-          <th>Name</th>
           <th>Position</th>
         </tr>
       </thead>
@@ -36,7 +39,6 @@ function Staff() {
         {staff.map((member, index) => (
           <tr key={index}>
             <td>{member.emplid}</td>
-            <td>{member.name}</td>
             <td>{member.position}</td>
           </tr>
         ))}
