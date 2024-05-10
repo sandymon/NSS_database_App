@@ -20,6 +20,29 @@ function Majors() {
    fetchAllMajors() 
   },[])
 
+  const  handleDelete = async (id)=>{
+
+    try {
+      const pkName = "major_id"
+      const confirmed = window.confirm("Are you sure you want to delete this employee?");
+    
+      if (confirmed) {
+          // If user confirms, proceed with deletion
+          const res = await axios.delete(`http://localhost:8100/courses/${id}/${pkName}`);
+          alert(res.data.sqlMessage)
+
+          window.location.reload()
+      } else {
+          // If user cancels, do nothing or provide feedback
+          console.log("Deletion cancelled by user.");
+      }
+    
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+
   return (
     <>
       <Navbar/>
@@ -47,6 +70,8 @@ function Majors() {
               <td>{major.type_of_degree}</td>
               <td>{major.total_credits_required}</td>
               <td>{major.faculty_advisor_emplid}</td>
+              <td> <button >Edit</button></td>
+              <td> <button onClick={()=>handleDelete(major.major_id)}>Delete</button></td>
             </tr>
           ))}
         </tbody>

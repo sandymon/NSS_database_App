@@ -20,6 +20,28 @@ function faculties() {
     }
    fetchAllfaculties() 
   },[])
+  const  handleDelete = async (id)=>{
+
+    try {
+      const pkName = "emplid"
+      const confirmed = window.confirm("Are you sure you want to delete this employee?");
+    
+      if (confirmed) {
+          // If user confirms, proceed with deletion
+          const res = await axios.delete(`http://localhost:8100/courses/${id}/${pkName}`);
+          alert(res.data.sqlMessage)
+
+          window.location.reload()
+      } else {
+          // If user cancels, do nothing or provide feedback
+          console.log("Deletion cancelled by user.");
+      }
+    
+    } catch (error) {
+      alert(error)
+    }
+  }
+
 
   return (
     <>
@@ -46,6 +68,8 @@ function faculties() {
             <td>{member.specialization}</td>
             <td>{member.areas_of_research_interests}</td>
             <td>{member.areas_of_teaching_interests}</td>
+            <td> <button >Edit</button></td>
+              <td> <button onClick={()=>handleDelete(member.emplid)}>Delete</button></td>
           </tr>
         ))}
       </tbody>

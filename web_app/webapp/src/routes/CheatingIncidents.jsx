@@ -21,6 +21,30 @@ function CheatingIncidents() {
    fetchAllCheatingIncidents() 
   },[])
 
+
+  const  handleDelete = async (id)=>{
+
+    try {
+      const pkName = "incident_id"
+      const confirmed = window.confirm("Are you sure you want to delete this employee?");
+    
+      if (confirmed) {
+          // If user confirms, proceed with deletion
+          const res = await axios.delete(`http://localhost:8100/courses/${id}/${pkName}`);
+          alert(res.data.sqlMessage)
+
+          window.location.reload()
+      } else {
+          // If user cancels, do nothing or provide feedback
+          console.log("Deletion cancelled by user.");
+      }
+    
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+
   return (
     <>
     <Navbar/>
@@ -48,6 +72,8 @@ function CheatingIncidents() {
             <td>{incident.date}</td>
             <td>{incident.description}</td>
             <td>{incident.resolution}</td>
+            <td> <button >Edit</button></td>
+              <td> <button onClick={()=>handleDelete(incident.incident_id)}>Delete</button></td>
           </tr>
         ))}
       </tbody>
