@@ -27,10 +27,10 @@ function Graduates() {
     
       if (confirmed) {
           // If user confirms, proceed with deletion
-          const res = await axios.delete(`http://localhost:8100/courses/${id}/${pkName}`);
+          const res = await axios.delete(`http://localhost:8100${window.location.pathname}/${id}/${pkName}`);
           alert(res.data.sqlMessage)
-
-          window.location.reload()
+          console.log(window.location);
+         // window.location.reload()
       } else {
           // If user cancels, do nothing or provide feedback
           console.log("Deletion cancelled by user.");

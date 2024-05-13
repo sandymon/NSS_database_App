@@ -28,7 +28,7 @@ function faculties() {
     
       if (confirmed) {
           // If user confirms, proceed with deletion
-          const res = await axios.delete(`http://localhost:8100/courses/${id}/${pkName}`);
+          const res = await axios.delete(`http://localhost:8100${window.location.pathname}/${id}/${pkName}`);
           alert(res.data.sqlMessage)
 
           window.location.reload()

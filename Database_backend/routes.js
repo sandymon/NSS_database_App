@@ -7,14 +7,12 @@ const app = express.Router();
 
 
 const db = mysql.createConnection({
-    host:"localhost",
-    user:"root",
-    password:"cmp420",
+    host:"192.168.1.187",
+    user:"cmpuser",
+    password:"CMP420",
     database:"nss",
-    port:"8000"
+    port:"3306"
 })
-
-
 
 
 app.get("/", (req,res)=>{
@@ -30,20 +28,21 @@ function getDataFromTable(table, res) {
     });
 }
 
+
 app.get("/employees", (req, res) => {
-    getDataFromTable('Employees', res);
+    getDataFromTable('employees', res);
 });
 
 app.get("/faculty", (req, res) => {
-    getDataFromTable('Faculty', res);
+    getDataFromTable('faculty', res);
 });
 
 app.get("/staff", (req, res) => {
-    getDataFromTable('Staff', res);
+    getDataFromTable('staff', res);
 });
 
 app.get("/courses", (req, res) => {
-    getDataFromTable('Courses', res);
+    getDataFromTable('courses', res);
 });
 
 
@@ -60,7 +59,7 @@ app.get("/departments", (req, res) => {
 
 // Get request for Majors
 app.get("/majors", (req, res) => {
-    getDataFromTable('Majors', res);
+    getDataFromTable('majors', res);
 });
 
 

@@ -7,11 +7,11 @@ const add = express.Router();
 
 
 const db = mysql.createConnection({
-    host:"localhost",
-    user:"root",
-    password:"cmp420",
+    host:"192.168.1.187",
+    user:"cmpuser",
+    password:"CMP420",
     database:"nss",
-    port:"8000"
+    port:"3306"
 })
 
 
@@ -22,17 +22,17 @@ function insertDataIntoTable(table, req, res) {
     const values = fields.map(field => req.body[field]);
 
     db.query(q, values, (error, data) => {
-        if (error) return res.json(error);
+        if (error) return res.json({error: error, errorState: true });
         return res.json(`${table.slice(0, -1)} has been added`);
     });
 }
 
 add.post("/employees", (req, res) => {
-    insertDataIntoTable('Employees', req, res);
+    insertDataIntoTable('employees', req, res);
 });
 
 add.post("/faculty", (req, res) => {
-    insertDataIntoTable('Faculty', req, res);
+    insertDataIntoTable('faculty', req, res);
 });
 
 add.post("/staff", (req, res) => {
@@ -40,47 +40,47 @@ add.post("/staff", (req, res) => {
 });
 
 add.post("/courses", (req, res) => {
-    insertDataIntoTable('Courses', req, res);
+    insertDataIntoTable('courses', req, res);
 });
 
 // Route handler for adding data to Course_Sections table
 add.post("/course_sections", (req, res) => {
-    insertDataIntoTable('Course_Sections', req, res);
+    insertDataIntoTable('course_sections', req, res);
 });
 
 // Route handler for adding data to Departments table
 add.post("/departments", (req, res) => {
-    insertDataIntoTable('Departments', req, res);
+    insertDataIntoTable('departments', req, res);
 });
 
 // Route handler for adding data to Majors table
 add.post("/majors", (req, res) => {
-    insertDataIntoTable('Majors', req, res);
+    insertDataIntoTable('majors', req, res);
 });
 
 // Route handler for adding data to Students table
 add.post("/students", (req, res) => {
-    insertDataIntoTable('Students', req, res);
+    insertDataIntoTable('students', req, res);
 });
 
 // Route handler for adding data to Graduates table
 add.post("/graduates", (req, res) => {
-    insertDataIntoTable('Graduates', req, res);
+    insertDataIntoTable('graduates', req, res);
 });
 
 // Route handler for adding data to Employers table
 add.post("/employers", (req, res) => {
-    insertDataIntoTable('Employers', req, res);
+    insertDataIntoTable('employers', req, res);
 });
 
 // Route handler for adding data to Employment_Records table
 add.post("/employment_records", (req, res) => {
-    insertDataIntoTable('Employment_Records', req, res);
+    insertDataIntoTable('employment_records', req, res);
 });
 
 // Route handler for adding data to Cheating_Incidents table
 add.post("/cheating_incidents", (req, res) => {
-    insertDataIntoTable('Cheating_Incidents', req, res);
+    insertDataIntoTable('cheating_incidents', req, res);
 });
 
 export default add

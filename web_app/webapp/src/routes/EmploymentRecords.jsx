@@ -29,8 +29,8 @@ function EmployementRecords() {
     
       if (confirmed) {
           // If user confirms, proceed with deletion
-          const res = await axios.delete(`http://localhost:8100/employment_records/${id}/${pkName}`);
-          alert(res.statusText)
+          const res = await axios.delete(`http://localhost:8100${window.location.pathname}/${id}/${pkName}`);
+          alert(res.data.message)
 
           window.location.reload()
       } else {
@@ -70,7 +70,7 @@ function EmployementRecords() {
             <td>{record.end_date}</td>
             <td>{record.job_title_or_position}</td>
             <td> <button >Edit</button></td>
-            <td> <button onClick={()=>handleDelete(record.emplid)}>Delete</button></td>
+            <td> <button onClick={()=>handleDelete(record.record_id)}>Delete</button></td>
           </tr>
         ))}
       </tbody>

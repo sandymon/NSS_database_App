@@ -17,8 +17,8 @@ function AddData({ fields, endpoint }) {
     e.preventDefault();
     try {
       const res = await axios.post(`http://localhost:8100/${endpoint}`, formData);
-      console.log(res.request.response);  
-       if(res.request.response.length <= 30){
+      console.log(res.request);  
+       if(!res.errorState){
         alert(res.data)
         window.location.reload()
       }else(
@@ -43,7 +43,7 @@ function AddData({ fields, endpoint }) {
             required= {index === 0 && 'required'}
           />
         ))}
-        <button type="submit">Add Data</button>
+        <button type="submit">Add {endpoint}</button>
       </form>
     </div>
   );

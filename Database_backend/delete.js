@@ -5,16 +5,17 @@ const del = express.Router();
 
 
 const db = mysql.createConnection({
-    host:"localhost",
-    user:"root",
-    password:"cmp420",
+    host:"192.168.1.187",
+    user:"cmpuser",
+    password:"CMP420",
     database:"nss",
-    port:"8000"
+    port:"3306"
 })
+
 
 function deleteDataFromTable(table, id, name,  res) {
     const q = `DELETE FROM ${table} WHERE ${name} = ?`;
-
+    console.log(q);
     db.query(q, [id,name],  (error, result) => {
         if (error) return res.json(error);
         if (result.affectedRows === 0) {
@@ -27,82 +28,85 @@ function deleteDataFromTable(table, id, name,  res) {
 
 del.delete("/employees/:id/:name", (req, res) => {
     const id = req.params.id;
+    console.log(id + "-----");
+
     const name = req.params.name;
 
-    deleteDataFromTable('Employees', id, name,  res);
+    deleteDataFromTable('employees', id, name,  res);
 });
 
 del.delete("/faculty/:id/:name", (req, res) => {
     const id = req.params.id;
+    console.log(id + "-----");
     const name = req.params.name;    
-    deleteDataFromTable('Faculty', id, name,  res);
+    deleteDataFromTable('faculty', id, name,  res);
 });
 
 del.delete("/staff/:id/:name", (req, res) => {
     const id = req.params.id;
     const name = req.params.name;
-    deleteDataFromTable('Staff', id, name,  res);
+    deleteDataFromTable('staff', id, name,  res);
 });
 
 del.delete("/courses/:id/:name", (req, res) => {
     const id = req.params.id;
     const name = req.params.name;
 
-    deleteDataFromTable('Courses', id, name,  res);
+    deleteDataFromTable('courses', id, name,  res);
 });
 
 del.delete("/course_sections/:id/:name", (req, res) => {
     const id = req.params.id;
     const name = req.params.name;
 
-    deleteDataFromTable('Course_Sections', id, name,  res);
+    deleteDataFromTable('course_sections', id, name,  res);
 });
 
 del.delete("/departments/:id/:name", (req, res) => {
     const id = req.params.id;
     const name = req.params.name;
-    deleteDataFromTable('Departments', id, name,  res);
+    deleteDataFromTable('departments', id, name,  res);
 });
 
 del.delete("/majors/:id/:name", (req, res) => {
     const id = req.params.id;
     const name = req.params.name;
-    deleteDataFromTable('Majors', id, name,  res);
+    deleteDataFromTable('majors', id, name,  res);
 });
 
 del.delete("/students/:id/:name", (req, res) => {
     const id = req.params.id;
     const name = req.params.name;
 
-    deleteDataFromTable('Students', id, name,  res);
+    deleteDataFromTable('students', id, name,  res);
 });
 
 del.delete("/graduates/:id/:name", (req, res) => {
     const id = req.params.id;
     const name = req.params.name;
 
-    deleteDataFromTable('Graduates', id, name,  res);
+    deleteDataFromTable('graduates', id, name,  res);
 });
 
 del.delete("/employers/:id/:name", (req, res) => {
     const id = req.params.id;
     const name = req.params.name;
 
-    deleteDataFromTable('Employers', id, name,  res);
+    deleteDataFromTable('employers', id, name,  res);
 });
 
 del.delete("/employment_records/:id/:name", (req, res) => {
     const id = req.params.id;
     const name = req.params.name;
 
-    deleteDataFromTable('Employment_Records', id, name,  res);
+    deleteDataFromTable('employment_records', id, name,  res);
 });
 
 del.delete("/cheating_incidents/:id/:name", (req, res) => {
     const id = req.params.id;
     const name = req.params.name;
 
-    deleteDataFromTable('Cheating_Incidents', id, name,  res);
+    deleteDataFromTable('cheating_incidents', id, name,  res);
 });
 
 

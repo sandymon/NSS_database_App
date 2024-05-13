@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
-import Add from '../components/Add'
 import { Link } from 'react-router-dom'
 import AddData from '../components/AddData'
 
@@ -15,7 +14,7 @@ function employees() {
       try{
         const res = await axios.get("http://localhost:8100/employees")
         setEmployees(res.data)
-        console.log(employees)
+        console.log(res.data)
       }catch(err){
         console.log(err)
       }
@@ -34,8 +33,8 @@ function employees() {
     
       if (confirmed) {
           // If user confirms, proceed with deletion
-          const res = await axios.delete(`http://localhost:8100/employees/${id}/${pkName}`);
-          alert(res.statusText)
+          const res = await axios.delete(`http://localhost:8100${window.location.pathname}/${id}/${pkName}`);
+          alert(res.data.message)
 
           window.location.reload()
       } else {

@@ -7,11 +7,10 @@ const add = express.Router();
 
 
 const db = mysql.createConnection({
-    host:"localhost",
-    user:"root",
-    password:"cmp420",
+    host:"192.168.1.187",
+    user:"cmpuser",
+    password:"CMP420",
     database:"nss",
-    port:"8000"
 })
 
 
