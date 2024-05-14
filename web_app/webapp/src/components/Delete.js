@@ -8,7 +8,7 @@ export default async function handleDelete(pathName, id, pkName) {
       
         if (confirmed) {
             // If user confirms, proceed with deletion
-            const res = await axios.delete(`https://request.moonrod.cc/${pathName}/${id}/${pkName}`);
+            const res = await axios.delete(`https://request.moonrod.cc${pathName}/${id}/${pkName}`);
             if(!res.data.errorState  && res.data.index != 0){
               alert(res.data.message)
               window.location.reload()
