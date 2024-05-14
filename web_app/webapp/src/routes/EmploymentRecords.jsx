@@ -15,7 +15,7 @@ function EmployementRecords() {
   useEffect(()=>{
     const fetchAllEmploymentRecords = async ()=>{
       try{
-        const res = await axios.get("http://localhost:8100/employment_records")
+        const res = await axios.get("https://request.moonrod.cc/employment_records")
         setEmploymentRecords(res.data)
         console.log(employmentRecords)
       }catch(err){

@@ -15,7 +15,7 @@ function CourseSections() {
   useEffect(()=>{
     const fetchAllCourseSections = async ()=>{
       try{
-        const res = await axios.get("http://localhost:8100/course_sections")
+        const res = await axios.get("https://request.moonrod.cc/course_sections")
         setCourseSections(res.data)
         console.log(courseSections)
       }catch(err){

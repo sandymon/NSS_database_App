@@ -16,7 +16,7 @@ function Majors() {
   useEffect(()=>{
     const fetchAllMajors = async ()=>{
       try{
-        const res = await axios.get("http://localhost:8100/majors")
+        const res = await axios.get("https://request.moonrod.cc/majors")
         setMajors(res.data)
         console.log(majors)
       }catch(err){

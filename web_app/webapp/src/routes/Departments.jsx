@@ -16,7 +16,7 @@ function departments() {
   useEffect(()=>{
     const fetchAlldepartments = async ()=>{
       try{
-        const res = await axios.get("http://localhost:8100/departments")
+        const res = await axios.get("https://request.moonrod.cc/departments")
         setdepartments(res.data)
         console.log(departments)
       }catch(err){

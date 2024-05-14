@@ -16,7 +16,7 @@ function AddData({ fields, endpoint }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`http://localhost:8100/${endpoint}`, formData);
+      const res = await axios.post(`https://request.moonrod.cc/${endpoint}`, formData);
       console.log(res.request);  
       if(!res.data.errorState  && res.data.index != 0){        
         alert(res.data)

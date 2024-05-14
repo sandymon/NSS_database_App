@@ -17,7 +17,7 @@ function employees() {
   useEffect(()=>{
     const fetchAllEmployees = async ()=>{
       try{
-        const res = await axios.get("http://localhost:8100/employees")
+        const res = await axios.get("https://request.moonrod.cc/employees")
         setEmployees(res.data)
         console.log(res.data)
       }catch(err){

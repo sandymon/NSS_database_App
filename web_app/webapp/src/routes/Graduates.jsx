@@ -14,7 +14,7 @@ function Graduates() {
   useEffect(()=>{
     const fetchAllGraduates = async ()=>{
       try{
-        const res = await axios.get("http://localhost:8100/graduates")
+        const res = await axios.get("https://request.moonrod.cc/graduates")
         setGraduates(res.data)
         console.log(graduates)
       }catch(err){

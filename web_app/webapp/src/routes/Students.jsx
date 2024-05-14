@@ -16,7 +16,7 @@ function Students() {
   useEffect(()=>{
     const fetchAllStudents = async ()=>{
       try{
-        const res = await axios.get("http://localhost:8100/students")
+        const res = await axios.get("https://request.moonrod.cc/students")
         setStudents(res.data)
         
       }catch(err){

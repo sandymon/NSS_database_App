@@ -24,7 +24,7 @@ function Update({fields, endpoint}) {
       e.preventDefault();
 
       try {
-        const res = await axios.put(`http://localhost:8100/${endpoint}/${kArr[0]}/${vArr[0]}`, formData);
+        const res = await axios.put(`https://request.moonrod.cc/${endpoint}/${kArr[0]}/${vArr[0]}`, formData);
         console.log(res);  
         if(res.data.index != 0){
           alert(res.data)

@@ -16,7 +16,7 @@ function CheatingIncidents() {
   useEffect(()=>{
     const fetchAllCheatingIncidents = async ()=>{
       try{
-        const res = await axios.get("http://localhost:8100/cheating_incidents")
+        const res = await axios.get("https://request.moonrod.cc/cheating_incidents")
         setCheatingIncidents(res.data)
         console.log(cheatingIncidents)
       }catch(err){
