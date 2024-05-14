@@ -19,9 +19,9 @@ function deleteDataFromTable(table, id, name,  res) {
     db.query(q, [id,name],  (error, result) => {
         if (error) return res.json(error);
         if (result.affectedRows === 0) {
-            return res.json({ message: 'No data deleted' });
+            return res.json({ message: 'No data deleted', errorState: true });
         } else {
-            return res.json({ message: 'Data deleted successfully' });
+            return res.json({ message: 'Data deleted successfully', errorState: false });
         }
     });
 }

@@ -4,6 +4,7 @@ import cors from "cors"
 import routes from './routes.js'; 
 import add from "./add.js";
 import del from "./delete.js";
+import update from "./update.js"
 
 const app = express()
 
@@ -14,7 +15,7 @@ app.use(cors())
 
 
 
-app.use('/', routes, add, del)
+app.use('/', routes, add, del,update)
 
 
 

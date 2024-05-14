@@ -20,6 +20,7 @@ import EmploymentRecords from './routes/EmploymentRecords';
 import CheatingIncidents from './routes/CheatingIncidents';
 import CourseSections from "./routes/CourseSection";
 import AddData from "./components/AddData";
+import Edit from "./components/Edit"
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,11 @@ const router = createBrowserRouter([
     path: "/add",
     element: <AddData/>
   },
+  {
+    path: "/edit",
+    element: <Edit/>
+  },
+
   
  
 ]);

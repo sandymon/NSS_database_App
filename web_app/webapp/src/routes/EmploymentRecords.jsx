@@ -2,11 +2,15 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
+import handleDelete from '../components/Delete'
+import Edit from '../components/Edit'
 
 import AddData from '../components/AddData'
 
 function EmployementRecords() {
   const [employmentRecords,setEmploymentRecords] = useState([])
+  const [employmentRecord,setEmploymentRecord] = useState([])
+  const [showEdit, setShowEdit] = useState(false);
 
   useEffect(()=>{
     const fetchAllEmploymentRecords = async ()=>{
@@ -21,33 +25,14 @@ function EmployementRecords() {
    fetchAllEmploymentRecords() 
   },[])
 
-  const  handleDelete = async (id)=>{
-
-    try {
-      const pkName = "record_id"
-      const confirmed = window.confirm("Are you sure you want to delete this employee?");
-    
-      if (confirmed) {
-          // If user confirms, proceed with deletion
-          const res = await axios.delete(`http://localhost:8100${window.location.pathname}/${id}/${pkName}`);
-          alert(res.data.message)
-
-          window.location.reload()
-      } else {
-          // If user cancels, do nothing or provide feedback
-          console.log("Deletion cancelled by user.");
-      }
-    
-    } catch (error) {
-      alert(error)
-    }
-  }
+  
   return (
     <>
     <Navbar/>
 
     <h1>Employment Records Table</h1>
     <button><AddData fields={['record_id','emplid','employer_id','start_date', 'end_date', 'job_title_or_position']} endpoint="employment_records"/></button>
+    {showEdit  && <Edit fields ={employmentRecord} endpoint={window.location.pathname.slice(1)}/>}   
 
     <table className='employment-records-table'>
       <thead>
@@ -69,8 +54,8 @@ function EmployementRecords() {
             <td>{record.start_date}</td>
             <td>{record.end_date}</td>
             <td>{record.job_title_or_position}</td>
-            <td> <button >Edit</button></td>
-            <td> <button onClick={()=>handleDelete(record.record_id)}>Delete</button></td>
+            <td> <button onClick={()=>{setShowEdit(true), setEmploymentRecord(record)}}>Edit</button></td>
+            <td> <button onClick={() => {handleDelete(window.location.pathname, record.record_id, 'record_id')}}>Delete</button></td>
           </tr>
         ))}
       </tbody>

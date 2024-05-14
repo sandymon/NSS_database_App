@@ -2,10 +2,16 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
+import handleDelete from '../components/Delete'
+import Edit from '../components/Edit'
+
 
 import AddData from '../components/AddData'
 function Majors() {
   const [majors,setMajors] = useState([])
+  const [major,setMajor] = useState([])
+  const [showEdit, setShowEdit] = useState(false);
+
 
   useEffect(()=>{
     const fetchAllMajors = async ()=>{
@@ -20,27 +26,7 @@ function Majors() {
    fetchAllMajors() 
   },[])
 
-  const  handleDelete = async (id)=>{
-
-    try {
-      const pkName = "major_id"
-      const confirmed = window.confirm("Are you sure you want to delete this employee?");
-    
-      if (confirmed) {
-          // If user confirms, proceed with deletion
-          const res = await axios.delete(`http://localhost:8100/courses/${id}/${pkName}`);
-          alert(res.data.sqlMessage)
-
-          window.location.reload()
-      } else {
-          // If user cancels, do nothing or provide feedback
-          console.log("Deletion cancelled by user.");
-      }
-    
-    } catch (error) {
-      alert(error)
-    }
-  }
+  
 
 
   return (
@@ -49,6 +35,7 @@ function Majors() {
 
      <h1>Majors Table</h1>
      <button><AddData fields={['major_id','name', 'description', 'type_of_degree', 'total_credits_required', 'faculty_advisor_emplid']} endpoint="majors"/></button>
+     {showEdit  && <Edit fields ={major} endpoint={window.location.pathname.slice(1)}/>}   
 
       <table className='majors-table'>
         <thead>
@@ -70,8 +57,8 @@ function Majors() {
               <td>{major.type_of_degree}</td>
               <td>{major.total_credits_required}</td>
               <td>{major.faculty_advisor_emplid}</td>
-              <td> <button >Edit</button></td>
-              <td> <button onClick={()=>handleDelete(major.major_id)}>Delete</button></td>
+              <td> <button onClick={()=>{setShowEdit(true), setMajor(major)}}>Edit</button></td>
+              <td> <button onClick={() => {handleDelete(window.location.pathname, employee.major_id, 'major_id')}}>Delete</button></td>
             </tr>
           ))}
         </tbody>

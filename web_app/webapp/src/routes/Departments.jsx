@@ -3,10 +3,15 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
 import AddData from '../components/AddData'
+import handleDelete from '../components/Delete'
+import Edit from '../components/Edit'
+
 
 
 function departments() {
   const [departments,setdepartments] = useState([])
+  const [department,setDepartment] = useState([])
+  const [showEdit, setShowEdit] = useState(false);
 
   useEffect(()=>{
     const fetchAlldepartments = async ()=>{
@@ -23,34 +28,14 @@ function departments() {
 
 
 
-  const  handleDelete = async (id)=>{
-
-    try {
-      const pkName = "department_id"
-      const confirmed = window.confirm("Are you sure you want to delete this employee?");
-    
-      if (confirmed) {
-          // If user confirms, proceed with deletion
-          const res = await axios.delete(`http://localhost:8100/departments/${id}/${pkName}`);
-          alert(res.statusText)
-
-          window.location.reload()
-      } else {
-          // If user cancels, do nothing or provide feedback
-          console.log("Deletion cancelled by user.");
-      }
-    
-    } catch (error) {
-      alert(error)
-    }
-  }
-
+ 
   return (
     <>
     <Navbar/>
 
      <h1>Departments Table</h1>
      <button><AddData fields={['department_id','name', 'phone', 'office_location', 'chairperson_emplid', 'chairperson_start_date', 'secretary_emplid', 'secretary_start_date']} endpoint="departments"/></button>
+     {showEdit  && <Edit fields ={department} endpoint={window.location.pathname.slice(1)}/>}   
 
   <table className='departments-table'>
     <thead>
@@ -75,8 +60,8 @@ function departments() {
           <td>{department.chairperson_emplid}</td>
           <td>{department.chairperson_start_date}</td>
           <td>{department.secretary_emplid}</td>
-          <td>{department.secretary_start_date}</td> <td> <button >Edit</button></td>
-          <td> <button onClick={()=>handleDelete(department.department_id)}>Delete</button></td>
+          <td> <button onClick={()=>{setShowEdit(true), setDepartment(department)}}>Edit</button></td>
+          <td> <button onClick={() => {handleDelete(window.location.pathname, department.department_id, 'department_id')}}>Delete</button></td>
         </tr>
       ))}
     </tbody>

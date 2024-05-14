@@ -3,10 +3,15 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
 import AddData from '../components/AddData'
+import handleDelete from '../components/Delete'
+import Edit from '../components/Edit'
+
 
 
 function faculties() {
   const [faculties,setfaculties] = useState([])
+  const [faculty,setfaculty] = useState([])
+  const [showEdit, setShowEdit] = useState(false);
 
   useEffect(()=>{
     const fetchAllfaculties = async ()=>{
@@ -20,28 +25,7 @@ function faculties() {
     }
    fetchAllfaculties() 
   },[])
-  const  handleDelete = async (id)=>{
-
-    try {
-      const pkName = "emplid"
-      const confirmed = window.confirm("Are you sure you want to delete this employee?");
-    
-      if (confirmed) {
-          // If user confirms, proceed with deletion
-          const res = await axios.delete(`http://localhost:8100${window.location.pathname}/${id}/${pkName}`);
-          alert(res.data.sqlMessage)
-
-          window.location.reload()
-      } else {
-          // If user cancels, do nothing or provide feedback
-          console.log("Deletion cancelled by user.");
-      }
-    
-    } catch (error) {
-      alert(error)
-    }
-  }
-
+  
 
   return (
     <>
@@ -49,6 +33,7 @@ function faculties() {
 
     <h1>Faculty Table</h1>
     <button><AddData fields={['emplid', 'rank', 'specialization', 'areas_of_research_interests', 'areas_of_teaching_interests']} endpoint="faculty"/></button>
+    {showEdit  && <Edit fields ={faculty} endpoint={window.location.pathname.slice(1)}/>}   
 
     <table className='faculty-table'>
       <thead>
@@ -64,12 +49,12 @@ function faculties() {
         {faculties.map((member, index) => (
           <tr key={index}>
             <td>{member.emplid}</td>
-            <td>{member.rank}</td>
+            <td>{member.faculty_rank}</td>
             <td>{member.specialization}</td>
             <td>{member.areas_of_research_interests}</td>
             <td>{member.areas_of_teaching_interests}</td>
-            <td> <button >Edit</button></td>
-              <td> <button onClick={()=>handleDelete(member.emplid)}>Delete</button></td>
+            <td> <button onClick={()=>{setShowEdit(true), setfaculty(member)}}>Edit</button></td>
+            <td> <button onClick={() => {handleDelete(window.location.pathname, member.emplid, 'emplid')}}>Delete</button></td>
           </tr>
         ))}
       </tbody>

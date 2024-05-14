@@ -4,11 +4,16 @@ import axios from 'axios'
 import Navbar from './Navbar'
 import { Link } from 'react-router-dom'
 import AddData from '../components/AddData'
+import handleDelete from '../components/Delete'
+import Edit from '../components/Edit'
+
 
 function employees() {
   const [employees,setEmployees] = useState([])
+  const [employee,setEmployee] = useState([])
+  const [showEdit, setShowEdit] = useState(false);
 
-
+  
   useEffect(()=>{
     const fetchAllEmployees = async ()=>{
       try{
@@ -19,39 +24,18 @@ function employees() {
         console.log(err)
       }
     }
+    
    fetchAllEmployees() 
   },[])
 
 
 
-
-  const  handleDelete = async (id)=>{
-
-    try {
-      const pkName = "emplid"
-      const confirmed = window.confirm("Are you sure you want to delete this employee?");
-    
-      if (confirmed) {
-          // If user confirms, proceed with deletion
-          const res = await axios.delete(`http://localhost:8100${window.location.pathname}/${id}/${pkName}`);
-          alert(res.data.message)
-
-          window.location.reload()
-      } else {
-          // If user cancels, do nothing or provide feedback
-          console.log("Deletion cancelled by user.");
-      }
-    
-    } catch (error) {
-      alert(error)
-    }
-  }
-
   return (
     <>
       <Navbar/>
      <h1>Employees Table</h1>
-      <button><AddData  fields={['emplid', 'name', 'ssn', 'phone', 'email', 'address', 'office_location', 'date_of_hire', 'role']} endpoint="employees"/></button>    
+      <button><AddData  fields={['emplid', 'name', 'ssn', 'phone', 'email', 'address', 'office_location', 'date_of_hire', 'role']} endpoint="employees"/></button> 
+      {showEdit  && <Edit fields ={employee} endpoint={window.location.pathname.slice(1)}/>}   
      <table className='employees-table'>
         <thead>
           <tr>
@@ -79,8 +63,9 @@ function employees() {
               <td>{employee.office_location}</td>
               <td>{employee.date_of_hire}</td>
               <td>{employee.role}</td>
-              <td> <button >Edit</button></td>
-              <td> <button onClick={()=>handleDelete(employee.emplid)}>Delete</button></td>
+              <td> <button onClick={()=>{setShowEdit(true), setEmployee(employee)}}>Edit</button></td>
+              <td> <button onClick={() => {handleDelete(window.location.pathname, employee.emplid, 'emplid')}}>Delete</button></td>
+
               {/* Add more table data cells as needed */}
             </tr>
           ))}

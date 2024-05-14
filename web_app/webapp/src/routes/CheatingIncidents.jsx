@@ -4,9 +4,14 @@ import axios from 'axios'
 import Navbar from './Navbar'
 
 import AddData from '../components/AddData'
+import handleDelete from '../components/Delete'
+import Edit from '../components/Edit'
+
 
 function CheatingIncidents() {
   const [cheatingIncidents,setCheatingIncidents] = useState([])
+  const [cheatingIncident,setCheatingIncident] = useState([])
+  const [showEdit, setShowEdit] = useState(false);
 
   useEffect(()=>{
     const fetchAllCheatingIncidents = async ()=>{
@@ -22,27 +27,7 @@ function CheatingIncidents() {
   },[])
 
 
-  const  handleDelete = async (id)=>{
-
-    try {
-      const pkName = "incident_id"
-      const confirmed = window.confirm("Are you sure you want to delete this employee?");
-    
-      if (confirmed) {
-          // If user confirms, proceed with deletion
-          const res = await axios.delete(`http://localhost:8100/courses/${id}/${pkName}`);
-          alert(res.data.sqlMessage)
-
-          window.location.reload()
-      } else {
-          // If user cancels, do nothing or provide feedback
-          console.log("Deletion cancelled by user.");
-      }
-    
-    } catch (error) {
-      alert(error)
-    }
-  }
+  
 
 
   return (
@@ -51,6 +36,7 @@ function CheatingIncidents() {
 
     <h1>Cheating Incidents Table</h1>
     <button><AddData fields={['incident_id','emplid','sectionID','date', 'description', 'resolution']} endpoint="cheating_incidents"/></button>
+    {showEdit  && <Edit fields ={cheatingIncident} endpoint={window.location.pathname.slice(1,-1)}/>}   
 
     <table className='cheating-incidents-table'>
       <thead>
@@ -72,8 +58,8 @@ function CheatingIncidents() {
             <td>{incident.date}</td>
             <td>{incident.description}</td>
             <td>{incident.resolution}</td>
-            <td> <button >Edit</button></td>
-              <td> <button onClick={()=>handleDelete(incident.incident_id)}>Delete</button></td>
+            <td> <button onClick={()=>{setShowEdit(true), setCheatingIncident(incident)}}>Edit</button></td>
+            <td> <button onClick={() => {handleDelete(window.location.pathname, incident.incident_id, 'incident_id')}}>Delete</button></td>
           </tr>
         ))}
       </tbody>

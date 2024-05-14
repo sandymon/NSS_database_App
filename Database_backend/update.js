@@ -14,97 +14,81 @@ const db = mysql.createConnection({
 })
 
 
-function insertDataIntoTable(table, req, res) {
+function updateDataIntoTable(table, req, res) {
+    const id = req.params.id;
+    const name = req.params.name;
     const fields = Object.keys(req.body);
-    const placeholders = fields.map(() => '?').join(',');
-    const q = `UPDATE ${table} SET (${fields.join(',')}) VALUES(${placeholders})`;
+    const setClause = fields.map(field => `${field} = ?`).join(", ");
     const values = fields.map(field => req.body[field]);
+   // values.push(id); // Add the id value at the end for the WHERE clause
+
+    const q = `UPDATE ${table} SET ${setClause} WHERE ${name} = ${id}`;
 
     db.query(q, values, (error, data) => {
         if (error) return res.json(error);
-        return res.json(`${table.slice(0, -1)} has been added`);
+        return res.json(`${table.slice(0, -1)} has been updated`);
     });
 }
 
-add.post("/employees", (req, res) => {
-    insertDataIntoTable('Employees', req, res);
+
+add.put("/employees/:id/:name", (req, res) => {
+
+
+    updateDataIntoTable('employees', req,   res);
 });
 
-add.post("/faculty", (req, res) => {
-    insertDataIntoTable('Faculty', req, res);
+add.put("/faculty/:id/:name", (req, res) => {
+    updateDataIntoTable('faculty', req,   res);
 });
 
-add.post("/staff", (req, res) => {
-    insertDataIntoTable('Staff', req, res);
+add.put("/staff/:id/:name", (req, res) => {
+    updateDataIntoTable('staff', req,   res);
 });
 
-add.post("/courses", (req, res) => {
-    insertDataIntoTable('Courses', req, res);
+add.put("/courses/:id/:name", (req, res) => {
+
+    updateDataIntoTable('courses', req,   res);
 });
 
-add.get("/employees", (req, res) => {
-    getDataFromTable('Employees', res);
+add.put("/course_sections/:id/:name", (req, res) => {
+
+    updateDataIntoTable('course_sections', req,   res);
 });
 
-add.get("/faculty", (req, res) => {
-    getDataFromTable('Faculty', res);
+add.put("/departments/:id/:name", (req, res) => {
+    updateDataIntoTable('departments', req,   res);
 });
 
-add.get("/staff", (req, res) => {
-    getDataFromTable('Staff', res);
+add.put("/majors/:id/:name", (req, res) => {
+    updateDataIntoTable('majors', req,   res);
 });
 
-add.get("/courses", (req, res) => {
-    getDataFromTable('Courses', res);
+add.put("/students/:id/:name", (req, res) => {
+
+    updateDataIntoTable('students', req,   res);
 });
 
+add.put("/graduates/:id/:name", (req, res) => {
 
-// Get request for Courses
-add.get("/course_sections", (req, res) => {
-    getDataFromTable('course_sections', res);
+    updateDataIntoTable('graduates', req,   res);
 });
 
+add.put("/employers/:id/:name", (req, res) => {
 
-// Get request for Departments
-add.get("/departments", (req, res) => {
-    getDataFromTable('departments', res);
+    updateDataIntoTable('employers', req,   res);
 });
 
-// Get request for Majors
-add.get("/majors", (req, res) => {
-    getDataFromTable('Majors', res);
+add.put("/employment_records/:id/:name", (req, res) => {
+
+    updateDataIntoTable('employment_records', req,   res);
 });
 
+add.put("/cheating_incidents/:id/:name", (req, res) => {
 
-
-// Get request for Students
-add.get("/students", (req, res) => {
-    getDataFromTable('students', res);
-
+    updateDataIntoTable('cheating_incidents', req,   res);
 });
 
-// Get request for Graduates
-add.get("/graduates", (req, res) => {
-    getDataFromTable('graduates', res);
-
-});
-
-// Get request for Employers
-add.get("/employers", (req, res) => {
-    getDataFromTable('employers', res);
-
-});
-
-// Get request for Employment_Records
-add.get("/employment_records", (req, res) => {
-    getDataFromTable('employment_records', res);
-
-});
-
-// Get request for Cheating_Incidents
-add.get("/cheating_incidents", (req, res) => {
-    getDataFromTable('cheating_incidents', res);
-
-});
 
 export default add
+
+

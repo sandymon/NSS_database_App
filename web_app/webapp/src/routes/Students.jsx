@@ -3,9 +3,15 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import Navbar from './Navbar'
 import AddData from '../components/AddData'
+import handleDelete from '../components/Delete'
+import Edit from '../components/Edit'
+
 
 function Students() {
   const [students,setStudents] = useState([])
+  const [student,setStudent] = useState([])
+  const [showEdit, setShowEdit] = useState(false);
+
 
   useEffect(()=>{
     const fetchAllStudents = async ()=>{
@@ -22,28 +28,7 @@ function Students() {
   },[])
 
 
-  const  handleDelete = async (id)=>{
-
-    try {
-      const pkName = "emplid"
-      const confirmed = window.confirm("Are you sure you want to delete this employee?");
-    
-      if (confirmed) {
-          // If user confirms, proceed with deletion
-          const res = await axios.delete(`http://localhost:8100/courses/${id}/${pkName}`);
-          alert(res.data.sqlMessage)
-
-          window.location.reload()
-      } else {
-          // If user cancels, do nothing or provide feedback
-          console.log("Deletion cancelled by user.");
-      }
-    
-    } catch (error) {
-      alert(error)
-    }
-  }
-
+ 
 
   return (
     <>
@@ -51,6 +36,8 @@ function Students() {
 
     <h1>Students Table</h1>
     <button><AddData fields={['emplid','first_name', 'middle_initial', 'last_name', 'date_of_birth', 'email', 'phone', 'address','Major']} endpoint="students"/></button>
+    {showEdit  && <Edit fields ={student} endpoint={window.location.pathname.slice(1)}/>}   
+
     <table className='students-table'>
       <thead>
         <tr>
@@ -77,8 +64,8 @@ function Students() {
             <td>{student.phone}</td>
             <td>{student.address}</td>
             <td>{student.Major}</td>
-            <td> <button >Edit</button></td>
-              <td> <button onClick={()=>handleDelete(student.emplid)}>Delete</button></td>
+            <td> <button onClick={()=>{setShowEdit(true), setStudent(student)}}>Edit</button></td>
+            <td> <button onClick={() => {handleDelete(window.location.pathname, student.emplid, 'emplid')}}>Delete</button></td>
           </tr>
         ))}
       </tbody>

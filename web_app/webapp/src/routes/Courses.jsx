@@ -3,9 +3,15 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import AddData from '../components/AddData'
 import Navbar from './Navbar'
+import handleDelete from '../components/Delete'
+import Edit from '../components/Edit'
+
+
 
 function courses() {
   const [courses,setCourses] = useState([])
+  const [course,setCourse] = useState([])
+  const [showEdit, setShowEdit] = useState(false);
 
   useEffect(()=>{
     const fetchAllCourses = async ()=>{
@@ -21,28 +27,7 @@ function courses() {
    
   },[])
 
-  const  handleDelete = async (id)=>{
-
-    try {
-      const pkName = "CourseID"
-      const confirmed = window.confirm("Are you sure you want to delete this employee?");
-    
-      if (confirmed) {
-          // If user confirms, proceed with deletion
-          const res = await axios.delete(`http://localhost:8100/courses/${id}/${pkName}`);
-          alert(res.data.sqlMessage)
-
-          window.location.reload()
-      } else {
-          // If user cancels, do nothing or provide feedback
-          console.log("Deletion cancelled by user.");
-      }
-    
-    } catch (error) {
-      alert(error)
-    }
-  }
-
+  
 
   return (
     <>
@@ -50,6 +35,7 @@ function courses() {
 
     <h1>Courses Table</h1>
     <button><AddData fields={['CourseID','Course_Name', 'Course_Code', 'hours', 'credits', 'description', 'department_id']} endpoint="courses"/></button>
+    {showEdit  && <Edit fields ={course} endpoint={window.location.pathname.slice(1)}/>}   
 
     <table className='courses-table'>
       <thead>
@@ -74,8 +60,8 @@ function courses() {
             <td>{course.credits}</td>
             <td>{course.description}</td>
             <td>{course.department_id}</td>
-            <td> <button >Edit</button></td>
-              <td> <button onClick={()=>handleDelete(course.CourseID)}>Delete</button></td>
+            <td> <button onClick={()=>{setShowEdit(true), setCourse(course)}}>Edit</button></td>
+            <td> <button onClick={() => {handleDelete(window.location.pathname, course.CourseID, 'CourseID')}}>Delete</button></td>
             
           </tr>
         ))
